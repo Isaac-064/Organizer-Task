@@ -1,0 +1,7 @@
+{
+  "name": "Organizer-Task",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
