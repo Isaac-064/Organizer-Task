@@ -37,9 +37,9 @@
 
                   <div class="ion-text-center">
 
-                    <ion-button size="small">
+                    <ion-button (click)="addOrUpdateTask(task)" class="task.btn" mode="ios" size="small">
                       Ver Tarea
-                      <ion-icon class="task.btn" mode="ios" slot="end" name="eye-outline"></ion-icon>
+                      <ion-icon slot="end" name="eye-outline"></ion-icon>
                     </ion-button>
 
                     <ion-button class="task.btn" mode="ios" color="danger" size="small">

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ItemReorderEventDetail } from '@ionic/angular';
 import { Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -39,6 +40,10 @@ export class AddUpdateTaskComponent implements OnInit {
 
   getPorcentage() {
     return this.utilsSvc.getPercentage(this.form.value as Task);
+  }
+
+  handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
+    this.form.value.items = ev.detail.complete(this.form.value.items);
   }
 
 }

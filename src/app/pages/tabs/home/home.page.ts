@@ -50,7 +50,7 @@ tasks: Task[] = [
   ) { }
 
   ngOnInit() {
-    this.addOrUpdateTask();
+    this.addOrUpdateTask(this.tasks[0]);
   }
 
   getPercentage(task: Task){
