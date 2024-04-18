@@ -13,6 +13,7 @@ import { AddUpdateTaskComponent } from 'src/app/shared/components/add-update-tas
 export class HomePage implements OnInit {
 
 tasks: Task[] = []
+user = {} as User
 
   constructor(
     private firebaseSvc: FirebaseService, 
@@ -25,7 +26,12 @@ tasks: Task[] = []
 
   ionViewWillEnter() {
     this.getTasks()
+    this.getUser();
   }
+  
+    getUser(){
+      return this.user = this.utilsSvc.getElementFromLocalStorage('user');
+    }
 
   getPercentage(task: Task){
     return this.utilsSvc.getPercentage(task);
@@ -52,6 +58,55 @@ tasks: Task[] = []
         this.tasks = res;
         sub.unsubscribe();
       }
+    })
+  }
+
+  confirmDeleteTask(task : Task){
+    this.utilsSvc.presentAlert({
+      header: 'Eliminar tarea',
+      message: '¿Quieres eliminar esta tarea?',
+      mode: 'ios',
+      buttons: [{
+          text: 'Cancelar',
+          role: 'cancel',
+        }, {
+          text: 'Si, Eliminar',
+          handler: () => {
+            this.deleteTask(task);
+          }
+        }
+      ]
+    });
+  }
+  //========== Eleiminar Tarea ==========
+  deleteTask(task : Task) {
+    let path = `user/${this.user.uid}/tasks/${task.id}`;
+    console.log(path);
+
+    this.utilsSvc.presentLoading();
+
+    this.firebaseSvc.deleteDocument(path).then(res =>{
+
+      this.utilsSvc.presentToast({
+        message: 'Tarea eliminada exitosamente',
+        color: 'success',
+        icon: 'checkmark-circle-outline',
+        duration: 1500
+      })
+
+      this.getTasks();
+      this.utilsSvc.dismissLoading();
+    },error =>{
+
+      this.utilsSvc.presentToast({
+        message: error,
+        color: 'warning',
+        icon: 'alert-circle-outline',
+        duration: 5000
+      })
+
+      this.utilsSvc.dismissLoading();
+
     })
   }
 
