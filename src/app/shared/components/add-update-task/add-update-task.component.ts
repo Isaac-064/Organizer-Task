@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ItemReorderEventDetail } from '@ionic/angular';
-import { Task } from 'src/app/models/task.model';
+import { Item, Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -52,4 +52,32 @@ export class AddUpdateTaskComponent implements OnInit {
     this.form.updateValueAndValidity();
   }
 
+  createItem(){
+    this.utilsSvc.presentAlert({
+      header: 'Nueva Actividad',
+      backdropDismiss: false,
+      inputs: [
+        {
+          name: 'name',
+          type: 'textarea',
+          placeholder: 'Hacer algo...'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel,'
+        },
+        {
+          text: 'Agregar',
+          handler: (res) => {
+            
+            let item: Item = {name: res.name, completed: false};
+            this.form.value.items.push(item);
+            this.form.updateValueAndValidity();
+          }
+        }
+      ]
+    })
+  }
 }
