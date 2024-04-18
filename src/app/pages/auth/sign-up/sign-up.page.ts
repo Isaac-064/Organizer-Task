@@ -53,7 +53,7 @@ export class SignUpPage implements OnInit {
         }
 
         this.utilSvc.setElementInLocalStorage('user',user);
-        this.utilSvc.routerLink('/tabs');
+        this.utilSvc.routerLink('/tabs/home');
 
         this.utilSvc.dismissLoading();
 
@@ -64,6 +64,7 @@ export class SignUpPage implements OnInit {
           icon:'person-outline'
         })
 
+        this.form.reset();
       },error =>{
 
         this.utilSvc.dismissLoading();
