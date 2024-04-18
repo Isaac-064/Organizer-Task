@@ -14,6 +14,7 @@ export class HomePage implements OnInit {
 
 tasks: Task[] = []
 user = {} as User
+loading: boolean = false;
 
   constructor(
     private firebaseSvc: FirebaseService, 
@@ -52,11 +53,14 @@ user = {} as User
     let user : User = this.utilsSvc.getElementFromLocalStorage('user');
     let path = `user/${user.uid}`
 
+    this.loading = true;
+
     let sub = this.firebaseSvc.getSubCollection(path, 'tasks').subscribe({
       next: (res: Task[]) => {
         console.log(res);
         this.tasks = res;
         sub.unsubscribe();
+        this.loading = false;
       }
     })
   }
