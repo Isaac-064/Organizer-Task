@@ -17,7 +17,7 @@
                 <ion-col class="ion-text-center" size-lg="5" size-md="5" size-sm="4" size="12">
                   
                   <circle-progress
-                    [percent]="85"
+                    [percent]="getPercentage(task)"
                     [radius]="65"
                     [outerStrokeWidth]="6"
                     [innerStrokeWidth]="4"
@@ -25,7 +25,8 @@
                     [innerStrokeColor]="'#C7E596'"
                     [animation]="true"
                     [titleColor]="'var(--ion-color-dark)'"
-                    [animationDuration]="300">
+                    [animationDuration]="300"
+                    [subtitle]="'Progreso'">
                   </circle-progress>
                 
                 </ion-col>

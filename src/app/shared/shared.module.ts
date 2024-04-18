@@ -7,6 +7,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { CustomInputComponent } from './components/custom-input/custom-input.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { AddUpdateTaskComponent } from './components/add-update-task/add-update-task.component';
 
 
 
@@ -14,13 +15,15 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
   declarations: [
     HeaderComponent,
     CustomInputComponent,
-    LogoComponent
+    LogoComponent,
+    AddUpdateTaskComponent
   ],
   exports: [
     HeaderComponent,
     CustomInputComponent,
     LogoComponent,
-    NgCircleProgressModule
+    NgCircleProgressModule,
+    AddUpdateTaskComponent
   ],
   imports: [
     CommonModule,

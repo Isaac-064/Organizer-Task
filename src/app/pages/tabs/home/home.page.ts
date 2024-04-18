@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/models/task.model'
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +27,7 @@ tasks: Task[] = [
     description: 'Crear una funcion que permita al usuario con Google',
     items: [
       { name: 'Actividad 1', completed: true},
-      { name: 'Actividad 2', completed: false},
+      { name: 'Actividad 2', completed: true},
       { name: 'Actividad 3', completed: false},
     ]
   },
@@ -35,15 +37,22 @@ tasks: Task[] = [
     description: 'Crear una funcion que permita al usuario con Google',
     items: [
       { name: 'Actividad 1', completed: true},
-      { name: 'Actividad 2', completed: false},
-      { name: 'Actividad 3', completed: false},
+      { name: 'Actividad 2', completed: true},
+      { name: 'Actividad 3', completed: true},
     ]
   },
 ]
 
-  constructor() { }
+  constructor(
+    private firebaseSvc: FirebaseService, 
+    private utilsSvc: UtilsService 
+  ) { }
 
   ngOnInit() {
+  }
+
+  getPercentage(task: Task){
+    return this.utilsSvc.getPercentage(task);
   }
 
 }
