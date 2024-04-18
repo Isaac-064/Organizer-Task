@@ -44,6 +44,12 @@ export class AddUpdateTaskComponent implements OnInit {
 
   handleReorder(ev: CustomEvent<ItemReorderEventDetail>) {
     this.form.value.items = ev.detail.complete(this.form.value.items);
+    this.form.updateValueAndValidity();
+  }
+
+  removeItem(index: number) {
+    this.form.value.items.splice(index, 1);
+    this.form.updateValueAndValidity();
   }
 
 }
