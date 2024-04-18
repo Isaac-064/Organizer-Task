@@ -1,5 +1,5 @@
 <ion-content color="light">
-  <app-header color="light" [centerTitle]=true [isModal]=true title="Tarea"></app-header>
+  <app-header color="light" [centerTitle]=true [isModal]=true [title]="task ? 'Tarea' : 'Nueva Tarea'"></app-header>
 
 
   <app-custom-input [control]="form.controls.title" type="text" label="Titulo"></app-custom-input>
@@ -55,3 +55,11 @@
 
 
 </ion-content>
+
+<ion-footer>
+  <div class="ion-text-center">
+    <ion-button class="ion-margin" mode="ios" [disabled]="form.invalid" (click)="submit()" shape="round">
+      {{ task ? 'Cuardar Cambios' : 'Crear Tarea'}}
+    </ion-button>
+  </div>
+</ion-footer>

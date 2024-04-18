@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/models/task.model'
+import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateTaskComponent } from 'src/app/shared/components/add-update-task/add-update-task.component';
@@ -11,38 +12,7 @@ import { AddUpdateTaskComponent } from 'src/app/shared/components/add-update-tas
 })
 export class HomePage implements OnInit {
 
-tasks: Task[] = [
-  {
-    id: '1',
-    title: 'Autentificación con Google',
-    description: 'Crear una funcion que permita al usuario con Google',
-    items: [
-      { name: 'Actividad 1', completed: true},
-      { name: 'Actividad 2', completed: false},
-      { name: 'Actividad 3', completed: false},
-    ]
-  },
-  {
-    id: '2',
-    title: 'Autentificación con Google',
-    description: 'Crear una funcion que permita al usuario con Google',
-    items: [
-      { name: 'Actividad 1', completed: true},
-      { name: 'Actividad 2', completed: true},
-      { name: 'Actividad 3', completed: false},
-    ]
-  },
-  {
-    id: '3',
-    title: 'Autentificación con Google',
-    description: 'Crear una funcion que permita al usuario con Google',
-    items: [
-      { name: 'Actividad 1', completed: true},
-      { name: 'Actividad 2', completed: true},
-      { name: 'Actividad 3', completed: true},
-    ]
-  },
-]
+tasks: Task[] = []
 
   constructor(
     private firebaseSvc: FirebaseService, 
@@ -50,18 +20,38 @@ tasks: Task[] = [
   ) { }
 
   ngOnInit() {
-    this.addOrUpdateTask(this.tasks[0]);
+    // this.addOrUpdateTask(this.tasks[0]);
+  }
+
+  ionViewWillEnter() {
+    this.getTasks()
   }
 
   getPercentage(task: Task){
     return this.utilsSvc.getPercentage(task);
   }
 
-  addOrUpdateTask(task?: Task){
-    this.utilsSvc.presentModal({
+  async addOrUpdateTask(task?: Task){
+    let res = await this.utilsSvc.presentModal({
       component: AddUpdateTaskComponent,
       componentProps: {task},
       cssClass: 'add-update-modal'
+    })
+    if (res && res.success){
+      this.getTasks()
+    }
+  }
+
+  getTasks(){
+    let user : User = this.utilsSvc.getElementFromLocalStorage('user');
+    let path = `user/${user.uid}`
+
+    let sub = this.firebaseSvc.getSubCollection(path, 'tasks').subscribe({
+      next: (res: Task[]) => {
+        console.log(res);
+        this.tasks = res;
+        sub.unsubscribe();
+      }
     })
   }
 

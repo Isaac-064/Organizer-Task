@@ -40,5 +40,21 @@ export class FirebaseService {
     localStorage.removeItem('user')
   }
 
+//========== Firestore (Base de datos) =============
+  getSubCollection(path: string, subCollection: string){
+    return this.db.doc(path).collection(subCollection).valueChanges({ idField:'id'});
+  }
+
+  addToSubCollection(path: string, subCollection: string, object: any){
+    return this.db.doc(path).collection(subCollection).add(object);
+  }
+
+  updateDocument(path: string, object: any){
+    return this.db.doc(path).update(object);
+  }
+
+  deleteDocument(path: string){
+    return this.db.doc(path).delete();
+  }
 
 }
